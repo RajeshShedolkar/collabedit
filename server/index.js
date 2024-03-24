@@ -1,14 +1,14 @@
 const express = require("express")
-const {Server} = require("socket.io")
 const http = require("http")
-app = express()
-port = 3001
 
+const app = express()
+port = 3001
 const server = http.createServer(app)
+
 app.get("/", (req, res) => {
-    res.json({"key": "value"})
+    res.json({abc: "123"})
 })
 
 server.listen(port, () => {
-    console.log("server has started at port: ", port);
+    console.log("server has started at ", `${port}`)
 })
