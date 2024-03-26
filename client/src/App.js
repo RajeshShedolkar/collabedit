@@ -2,6 +2,7 @@
 import './App.css';
 import HomePage from './pages/home';
 import TextEditor from './pages/doc';
+import DocPage from './pages/Doc1';
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import SocketContextProvider from './Providers/Socket';
 function App() {
@@ -11,7 +12,7 @@ function App() {
           <Routes>
               <Route path="/home" element={<HomePage></HomePage>} /> 
               <Route path="/" element={<HomePage/>} />
-              <Route path="/doc/:pageId" element={<TextEditor/>} /> 
+              <Route path="/doc/:pageId" element={<DocPage/>} /> 
           </Routes>
       </SocketContextProvider>
     </BrowserRouter>

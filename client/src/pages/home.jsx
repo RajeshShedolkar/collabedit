@@ -7,8 +7,9 @@ const HomePage = () => {
     const navigate = useNavigate()
 
     const handleNewDoc = useCallback(() => {
-        const pageId = generate(5); // "zbc123"
-        navigate(`/doc/${pageId}`)
+        const pageId = generate(5);
+        localStorage.clear();
+        navigate(`/doc/${pageId}`, {state:{page: pageId}})
     }, [navigate])
 
     // useEffect(()=>{

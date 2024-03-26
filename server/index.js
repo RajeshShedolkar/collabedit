@@ -24,6 +24,11 @@ app.get("/home", (req, res) => {
 io.on("connection", socket => {
     console.log(`user connected:  ${socket.id}`);
 
+    socket.on("openNewDoc", (data) => {
+        const {clientName, pageId} = data;
+        console.log(`${clientName} and ${pageId} has joined...`)
+    })
+
     socket.on("disconnect", (reason) => {
         console.log(`user disconnected: ${socket.id}, reason: ${reason}`);
     });
