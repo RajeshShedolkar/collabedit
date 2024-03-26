@@ -7,10 +7,7 @@ const port = 3001
 const httpServer = http.createServer(app);
 
 const io = new Server(httpServer, {
-    cors: {
-        origin: "*", // Adjust according to your needs for security
-        methods: ["GET", "POST"]
-    }
+    cors: true
 });
 // const io = require("socket.io")(httpServer, {});
 

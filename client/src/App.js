@@ -3,16 +3,18 @@ import './App.css';
 import HomePage from './pages/home';
 import TextEditor from './pages/doc';
 import {BrowserRouter, Routes, Route} from "react-router-dom"
-
+import SocketContextProvider from './Providers/Socket';
 function App() {
   return (
     <BrowserRouter>
-            <Routes>
-                <Route path="/home" element={<HomePage></HomePage>} /> 
-                <Route path="/" element={<HomePage/>} />
-                <Route path="/doc/:pageId" element={<TextEditor/>} /> 
-            </Routes>
-        </BrowserRouter>
+      <SocketContextProvider>
+          <Routes>
+              <Route path="/home" element={<HomePage></HomePage>} /> 
+              <Route path="/" element={<HomePage/>} />
+              <Route path="/doc/:pageId" element={<TextEditor/>} /> 
+          </Routes>
+      </SocketContextProvider>
+    </BrowserRouter>
   );
 }
 
