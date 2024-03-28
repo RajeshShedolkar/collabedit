@@ -16,7 +16,7 @@ const DocPage = () => {
         const getLocalName = localStorage.getItem('curr_name')
         console.log("How many times useEffect runs")
 
-        if (!currName & getLocalName){
+        if (!currName && getLocalName){
             setCurrName(getLocalName);
             setNameList([...nameList, getLocalName]);
         }
@@ -26,8 +26,7 @@ const DocPage = () => {
             setCurrName(name);
             setNameList([...nameList, name]);
         } else{
-            console.log("How may times emits")
-            socket.emit("openNewDoc", { clientName: currName, pageId });
+            socket.emit("openNewDoc", { "clientName": currName, pageId });
             socket.on("NewUserJoined", handleNewUserJoined);
         }
         
