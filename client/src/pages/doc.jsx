@@ -27,8 +27,7 @@ const DocPage = () => {
             setCurrName(name);
             setNameList([...nameList, name]);
         } else{
-            socket.emit("openNewDoc", { "clientName": currName, pageId });
-            socket.on("NewUserJoined", handleNewUserJoined);
+            
         }
         
         window.addEventListener("error", (e) => {
@@ -38,7 +37,7 @@ const DocPage = () => {
         return () => {
             // Removes the listener from the listener array for 
             // the event named NewUserJoined.
-            socket.off("NewUserJoined", handleNewUserJoined);
+            // socket.off("NewUserJoined", handleNewUserJoined);
         }
     }, []);
 
@@ -66,11 +65,15 @@ const DocPage = () => {
     }, [currName, socket])
 
     useEffect(() => {
+        
+        socket.emit("openNewDoc", { "clientName": currName, pageId });
+        socket.on("NewUserJoined", handleNewUserJoined);
         socket.on("NewUserJoinedAckRes", handleNewUserJoinedAck);
         window.addEventListener("error", (e) => {
             console.log("Error from othr useEffect", e)
         });
         return () => {
+            socket.off("NewUserJoined", handleNewUserJoined);
             socket.off("NewUserJoinedAckRes", handleNewUserJoinedAck);
         }
     }, [socket, handleNewUserJoinedAck])
