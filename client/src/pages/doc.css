@@ -1,0 +1,9 @@
+.doc-texteditor {
+    flex-grow: 1;
+    margin-right: 20px;
+    padding: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
