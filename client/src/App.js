@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import './App.css';
-import HomePage from './pages/home';
+import HomePage from './pages/Home';
 import DocPage from './pages/Doc';
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import SocketContextProvider from './Providers/Socket';

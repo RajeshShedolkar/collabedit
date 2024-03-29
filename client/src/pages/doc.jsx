@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useSocket } from '../Providers/Socket';
 import { useLocation } from 'react-router-dom';
+import './doc.css'
 
 const DocPage = () => {
     const location = useLocation();
@@ -30,6 +31,9 @@ const DocPage = () => {
             socket.on("NewUserJoined", handleNewUserJoined);
         }
         
+        window.addEventListener("error", (e) => {
+            console.log("Error", e)
+        });
 
         return () => {
             // Removes the listener from the listener array for 
@@ -41,7 +45,7 @@ const DocPage = () => {
     const handleNewUserJoined = useCallback((data) => {
         console.log("New User has joined with data:", data)
         const {clientName, pageId} = data
-        if (currName!==clientName){
+        if (currName!==clientName) {
             setNameList([...nameList, clientName])
             console.log("socket value when user joined", socket);
             socket.emit("NewUserConnectedAck", {clientName: currName, pageId})
@@ -63,16 +67,14 @@ const DocPage = () => {
 
     useEffect(() => {
         socket.on("NewUserJoinedAckRes", handleNewUserJoinedAck);
-
+        window.addEventListener("error", (e) => {
+            console.log("Error from othr useEffect", e)
+        });
         return () => {
             socket.off("NewUserJoinedAckRes", handleNewUserJoinedAck);
         }
     }, [socket, handleNewUserJoinedAck])
     
-
-    
-    
-
     const handleTextChange = (e) => {
         setText(e.target.value);
         console.log("Text Editor Data:", e.target.value);
@@ -86,11 +88,7 @@ const DocPage = () => {
                 <h3 style={{ color: 'white', fontSize: '15px' }}>PageID: {pageId}</h3>
             </header>
             <div style={{ display: 'flex', flexGrow: 1, padding: '20px' }}>
-                <textarea
-                    value={text}
-                    onChange={handleTextChange}
-                    style={{ flexGrow: 1, marginRight: '20px', padding: '10px', fontSize: '16px', boxSizing: 'border-box', border: '2px solid #ccc', borderRadius: '4px' }}
-                />
+                <textarea value={text} onChange={handleTextChange} />
                 <div style={{ width: '200px', height: '50%', borderLeft: '1px solid #ccc', paddingLeft: '20px', boxSizing: 'border-box', border: '2px solid #ccc', borderRadius: '4px' }}>
                     <h2>Collaborators</h2>
                     <ul>
