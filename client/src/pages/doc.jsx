@@ -64,11 +64,17 @@ const DocPage = () => {
 
     }, [currName, socket])
 
+    const handleReceivedText = (data) => {
+            const {recivedText} = data;
+            // setText(recivedText)
+            console.log("recevied data from other user", data);
+    }
+
     useEffect(() => {
-        
         socket.emit("openNewDoc", { "clientName": currName, pageId });
         socket.on("NewUserJoined", handleNewUserJoined);
         socket.on("NewUserJoinedAckRes", handleNewUserJoinedAck);
+        socket.on("receiveText", handleReceivedText);
         window.addEventListener("error", (e) => {
             console.log("Error from othr useEffect", e)
         });
@@ -78,11 +84,15 @@ const DocPage = () => {
         }
     }, [socket, handleNewUserJoinedAck])
     
-    const handleTextChange = (e) => {
-        setText(e.target.value);
-        console.log("Text Editor Data:", e.target.value);
+    useEffect (
+    (e) => {
+        // setText(e.target.value);
+        console.log("Text Editor Data:", text);
         // Emit the changes to the server via WebSocket
-    };
+        const emitData = setTimeout(() => {
+            socket.emit("sendText", {pageId, text, name: currName})
+            }, 2000)
+    } , [text]);
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -91,7 +101,7 @@ const DocPage = () => {
                 <h3 style={{ color: 'white', fontSize: '15px' }}>PageID: {pageId}</h3>
             </header>
             <div style={{ display: 'flex', flexGrow: 1, padding: '20px' }}>
-                <textarea value={text} onChange={handleTextChange} />
+                <textarea value={text} onChange={(event) => setText(event.target.value)}/>
                 <div style={{ width: '200px', height: '50%', borderLeft: '1px solid #ccc', paddingLeft: '20px', boxSizing: 'border-box', border: '2px solid #ccc', borderRadius: '4px' }}>
                     <h2>Collaborators</h2>
                     <ul>
