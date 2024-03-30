@@ -45,6 +45,14 @@ io.on("connection", socket => {
         socket.broadcast.to(pageId).emit("NewUserJoinedAckRes", {clientName, pageId});
     })
 
+    socket.on("sendText", (data) => {
+        console.log("text data from client", SocketToClientName.get(socket.id), "data", data);
+        const {text, pageId, name} = data
+        const recivedName = SocketToClientName.get(socket.id)
+        socket.broadcast.to(pageId).emit("receiveText", {recivedText: text, pageId, snederName: name, recivedName});
+
+    });
+
     socket.on("disconnect", (reason) => {
         console.log(`user disconnected: ${socket.id}, reason: ${reason}`);
     });
