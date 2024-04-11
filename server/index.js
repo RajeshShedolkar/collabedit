@@ -26,8 +26,6 @@ app.get("/home", (req, res) => {
 io.on("connection", socket => {
     console.log(`user connected:  ${socket.id}`);
     // socket.on("message", (data) => {
-    //     console.log("data from client", data)
-    //     socket.emit("test", {"msg": "Hi I am from server"});
     // })
     socket.on("openNewDoc", (data) => {
         const {clientName, pageId} = data;
